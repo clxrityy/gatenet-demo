@@ -1,0 +1,9 @@
+# For Heroku demo - install gatenet directly from GitHub
+git+https://github.com/clxrityy/gatenet.git@master
+
+# Other demo dependencies
+fastapi
+uvicorn[standard]
+jinja2
+python-multipart
+aiofiles

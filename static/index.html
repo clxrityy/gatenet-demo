@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Gatenet Dashboard Demo</title>
+        <link rel="stylesheet" href="/static/styles.css">
+    </head>
+    <body>
+        <header>
+            <h1>Gatenet Dashboard</h1>
+            <p class="subtitle">Network Diagnostics & Monitoring</p>
+        </header>
+
+        <main>
+            <div class="tools-container">
+                <div class="tool-card" id="ping-tool">
+                    <h2>Ping</h2>
+                    <div class="tool-inputs">
+                        <input type="text" id="ping-host"
+                            placeholder="Host to ping (e.g., google.com)"
+                            value="google.com">
+                        <select title="ping count" id="ping-count">
+                            <option value="3">3 packets</option>
+                            <option value="5">5 packets</option>
+                            <option value="10">10 packets</option>
+                        </select>
+                        <button id="ping-button">Run Ping</button>
+                    </div>
+                    <div class="results" id="ping-results">
+                        <div class="loading" style="display:none">
+                            <div class="spinner"></div>
+                            <p>Running ping...</p>
+                        </div>
+                        <pre class="output"></pre>
+                    </div>
+                </div>
+
+                <div class="tool-card" id="traceroute-tool">
+                    <h2>Traceroute</h2>
+                    <div class="tool-inputs">
+                        <input type="text" id="traceroute-host"
+                            placeholder="Host to trace (e.g., github.com)"
+                            value="github.com">
+                        <button id="traceroute-button">Run Traceroute</button>
+                    </div>
+                    <div class="results" id="traceroute-results">
+                        <div class="loading" style="display:none">
+                            <div class="spinner"></div>
+                            <p>Running traceroute...</p>
+                        </div>
+                        <pre class="output"></pre>
+                    </div>
+                </div>
+
+                <div class="tool-card" id="dns-tool">
+                    <h2>DNS Lookup</h2>
+                    <div class="tool-inputs">
+                        <input type="text" id="dns-host"
+                            placeholder="Host to lookup (e.g., microsoft.com)"
+                            value="microsoft.com">
+                        <button id="dns-button">Lookup DNS</button>
+                    </div>
+                    <div class="results" id="dns-results">
+                        <div class="loading" style="display:none">
+                            <div class="spinner"></div>
+                            <p>Looking up DNS...</p>
+                        </div>
+                        <pre class="output"></pre>
+                    </div>
+                </div>
+
+                <div class="tool-card" id="port-tool">
+                    <h2>Port Scan</h2>
+                    <div class="tool-inputs">
+                        <input type="text" id="port-host"
+                            placeholder="Host to scan (e.g., example.com)"
+                            value="example.com">
+                        <input type="text" id="port-ports"
+                            placeholder="Ports (e.g., 80,443,22)"
+                            value="80,443,22,21,25">
+                        <button id="port-button">Scan Ports</button>
+                    </div>
+                    <div class="results" id="port-results">
+                        <div class="loading" style="display:none">
+                            <div class="spinner"></div>
+                            <p>Scanning ports...</p>
+                        </div>
+                        <pre class="output"></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-container">
+                <div class="info-card">
+                    <h3>About This Demo</h3>
+                    <p>This is a simplified version of the Gatenet dashboard
+                        running on Heroku. For security and resource
+                        constraints, some features are simulated.</p>
+                    <p>For full functionality, install the Gatenet package
+                        locally:</p>
+                    <pre>pip install gatenet</pre>
+                    <p>Then launch the full dashboard:</p>
+                    <pre>python -c "from gatenet.dashboard import launch_dashboard; launch_dashboard()"</pre>
+                </div>
+                <div class="info-card">
+                    <h3>Gatenet Features</h3>
+                    <ul>
+                        <li>Network Diagnostics (Ping, Traceroute, DNS,
+                            etc.)</li>
+                        <li>Service Discovery</li>
+                        <li>TCP/UDP Clients & Servers</li>
+                        <li>HTTP Microservices</li>
+                        <li>Mesh Networking</li>
+                        <li>Cross-platform Support</li>
+                    </ul>
+                    <p><a rel="noopener" href="https://gatenet.readthedocs.io"
+                            target="_blank">Full Documentation</a></p>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>Gatenet v0.12.0 - <a rel="noopener"
+                    href="https://github.com/clxrityy/gatenet"
+                    target="_blank">GitHub</a></p>
+        </footer>
+
+        <script src="/static/dashboard.js"></script>
+    </body>
+</html>
