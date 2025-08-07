@@ -3,129 +3,136 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Gatenet Dashboard Demo</title>
-        <link rel="stylesheet" href="/static/styles.css">
+        <title>Gatenet Dashboard</title>
+        <style>
+        body {
+            font-family: system-ui, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        input, select, button {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        input { flex: 1; }
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 8px 16px;
+        }
+        pre {
+            background: #343a40;
+            color: #f8f9fa;
+            padding: 12px;
+            border-radius: 4px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+    </style>
     </head>
     <body>
-        <header>
+        <div class="header">
             <h1>Gatenet Dashboard</h1>
-            <p class="subtitle">Network Diagnostics & Monitoring</p>
-        </header>
+            <p>Interactive Network Diagnostics Demo</p>
+        </div>
 
-        <main>
-            <div class="tools-container">
-                <div class="tool-card" id="ping-tool">
-                    <h2>Ping</h2>
-                    <div class="tool-inputs">
-                        <input type="text" id="ping-host"
-                            placeholder="Host to ping (e.g., google.com)"
-                            value="google.com">
-                        <select title="ping count" id="ping-count">
-                            <option value="3">3 packets</option>
-                            <option value="5">5 packets</option>
-                            <option value="10">10 packets</option>
-                        </select>
-                        <button id="ping-button">Run Ping</button>
-                    </div>
-                    <div class="results" id="ping-results">
-                        <div class="loading" style="display:none">
-                            <div class="spinner"></div>
-                            <p>Running ping...</p>
-                        </div>
-                        <pre class="output"></pre>
-                    </div>
-                </div>
-
-                <div class="tool-card" id="traceroute-tool">
-                    <h2>Traceroute</h2>
-                    <div class="tool-inputs">
-                        <input type="text" id="traceroute-host"
-                            placeholder="Host to trace (e.g., github.com)"
-                            value="github.com">
-                        <button id="traceroute-button">Run Traceroute</button>
-                    </div>
-                    <div class="results" id="traceroute-results">
-                        <div class="loading" style="display:none">
-                            <div class="spinner"></div>
-                            <p>Running traceroute...</p>
-                        </div>
-                        <pre class="output"></pre>
-                    </div>
-                </div>
-
-                <div class="tool-card" id="dns-tool">
-                    <h2>DNS Lookup</h2>
-                    <div class="tool-inputs">
-                        <input type="text" id="dns-host"
-                            placeholder="Host to lookup (e.g., microsoft.com)"
-                            value="microsoft.com">
-                        <button id="dns-button">Lookup DNS</button>
-                    </div>
-                    <div class="results" id="dns-results">
-                        <div class="loading" style="display:none">
-                            <div class="spinner"></div>
-                            <p>Looking up DNS...</p>
-                        </div>
-                        <pre class="output"></pre>
-                    </div>
-                </div>
-
-                <div class="tool-card" id="port-tool">
-                    <h2>Port Scan</h2>
-                    <div class="tool-inputs">
-                        <input type="text" id="port-host"
-                            placeholder="Host to scan (e.g., example.com)"
-                            value="example.com">
-                        <input type="text" id="port-ports"
-                            placeholder="Ports (e.g., 80,443,22)"
-                            value="80,443,22,21,25">
-                        <button id="port-button">Scan Ports</button>
-                    </div>
-                    <div class="results" id="port-results">
-                        <div class="loading" style="display:none">
-                            <div class="spinner"></div>
-                            <p>Scanning ports...</p>
-                        </div>
-                        <pre class="output"></pre>
-                    </div>
-                </div>
+        <div class="card">
+            <h2>Ping Test</h2>
+            <div class="input-group">
+                <input type="text" id="pingHost" value="google.com"
+                    placeholder="Host to ping">
+                <select title="ping count" id="pingCount">
+                    <option value="3">3 packets</option>
+                    <option value="5">5 packets</option>
+                    <option value="10">10 packets</option>
+                </select>
+                <button onclick="runPing()">Run Ping</button>
             </div>
+            <pre id="pingOutput">Results will appear here...</pre>
+        </div>
 
-            <div class="info-container">
-                <div class="info-card">
-                    <h3>About This Demo</h3>
-                    <p>This is a simplified version of the Gatenet dashboard
-                        running on Heroku. For security and resource
-                        constraints, some features are simulated.</p>
-                    <p>For full functionality, install the Gatenet package
-                        locally:</p>
-                    <pre>pip install gatenet</pre>
-                    <p>Then launch the full dashboard:</p>
-                    <pre>python -c "from gatenet.dashboard import launch_dashboard; launch_dashboard()"</pre>
-                </div>
-                <div class="info-card">
-                    <h3>Gatenet Features</h3>
-                    <ul>
-                        <li>Network Diagnostics (Ping, Traceroute, DNS,
-                            etc.)</li>
-                        <li>Service Discovery</li>
-                        <li>TCP/UDP Clients & Servers</li>
-                        <li>HTTP Microservices</li>
-                        <li>Mesh Networking</li>
-                        <li>Cross-platform Support</li>
-                    </ul>
-                    <p><a rel="noopener" href="https://gatenet.readthedocs.io"
-                            target="_blank">Full Documentation</a></p>
-                </div>
+        <div class="card">
+            <h2>DNS Lookup</h2>
+            <div class="input-group">
+                <input type="text" id="dnsHost" value="example.com"
+                    placeholder="Host to resolve">
+                <button onclick="runDNS()">Lookup</button>
             </div>
-        </main>
+            <pre id="dnsOutput">Results will appear here...</pre>
+        </div>
 
-        <footer>
-            <p>Gatenet v0.12.0 - <a rel="noopener"
-                    href="https://github.com/clxrityy/gatenet"
-                    target="_blank">GitHub</a></p>
-        </footer>
-
-        <script src="/static/dashboard.js"></script>
+        <script>
+        async function runPing() {
+            const host = document.getElementById('pingHost').value;
+            const count = document.getElementById('pingCount').value;
+            const output = document.getElementById('pingOutput');
+            
+            output.textContent = 'Running ping...';
+            
+            try {
+                const response = await fetch(`/api/ping?host=${encodeURIComponent(host)}&count=${count}`);
+                const data = await response.json();
+                
+                if (data.ok) {
+                    const result = data.result;
+                    output.textContent = `PING ${result.host}\n\n` +
+                        `${result.packets_sent} packets transmitted, ${result.packets_received} received, ` +
+                        `${result.packet_loss}% packet loss\n\n` +
+                        `min/avg/max = ${result.min_rtt.toFixed(2)}/${result.avg_rtt.toFixed(2)}/${result.max_rtt.toFixed(2)} ms`;
+                } else {
+                    output.textContent = `Error: ${data.error || 'Unknown error'}`;
+                }
+            } catch (e) {
+                output.textContent = `Error: ${e.message}`;
+            }
+        }
+        
+        async function runDNS() {
+            const host = document.getElementById('dnsHost').value;
+            const output = document.getElementById('dnsOutput');
+            
+            output.textContent = 'Looking up DNS...';
+            
+            try {
+                const response = await fetch(`/api/dns_lookup?host=${encodeURIComponent(host)}`);
+                const data = await response.json();
+                
+                if (data.ok && data.result) {
+                    output.textContent = `${data.result.host} → ${data.result.ip}`;
+                } else {
+                    output.textContent = `Error: ${data.error || 'Unknown error'}`;
+                }
+            } catch (e) {
+                output.textContent = `Error: ${e.message}`;
+            }
+        }
+    </script>
     </body>
 </html>
